@@ -97,12 +97,11 @@ class AnsibleInventory(Source):
                                'without hostname')
                 continue
 
-            ansible_user = entry.get('ansible_user')
-            if not ansible_user:
-                logger.warning(
-                    f'{self.name} skipping ansible device without username')
-                continue
-
+            # Get user if any
+            ansible_user = None
+            if 'ansible_user' in entry:
+                ansible_user = entry['ansible_user']
+                
             # Get password if any
             password = None
             if 'ansible_password' in entry:
